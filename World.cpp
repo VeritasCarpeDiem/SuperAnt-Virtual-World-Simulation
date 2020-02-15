@@ -7,6 +7,7 @@
 #include "BombBug.h"
 #include <conio.h>
 #include "XY.h"
+#include "SuperAnt.h"
 using namespace std;
 
 ///////////////////
@@ -33,6 +34,8 @@ World::World(unsigned int seed)
 	createOrganisms(OrganismType::BUG, INITIAL_BUGS);
 
 	createOrganisms(OrganismType::BombBug, INITIAL_BOMBBUGS);
+
+	createOrganisms(OrganismType::SuperAnt, initial_SuperAnts);
 }
 
 // Deallocate memory allocated to organisms in this world.
@@ -60,7 +63,7 @@ Organism* World::getAt(int x, int y) const
 	}
 	else
 	{
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -77,12 +80,11 @@ void World::setAt(int x, int y, Organism* org)
 void World::display() const
 {
 	displayGUI();
-	int numAnts = 0;
-	int numBugs = 0;
-	int numBombBugs = 0;
-	int x, y;
-	x = 10;
-	y = 10;
+	int numAnts{}, numBugs{}, numBombBugs{}, numSuperAnts{};
+
+	int x = 10;
+	int y=10;
+
 	changeColor c;
 	XY xy;
 
@@ -114,6 +116,11 @@ void World::display() const
 					c.changeTextColor(Colors::GREEN);
 					numBombBugs++;
 				}
+				else if (grid[i][j]->getType() == OrganismType::SuperAnt)
+				{
+					c.changeTextColor(Colors::YELLOW);
+					numSuperAnts++;
+				}
 				cout << " " << grid[i][j]->representation() << " ";
 				c.changeTextColor(Colors::WHITE);
 			}
@@ -126,7 +133,9 @@ void World::display() const
 	xy.gotoXY(20, 4);
 	cout << "Bugs: " << numBugs;
 	xy.gotoXY(20, 5);
-	cout << "BombBugs: " << numBombBugs << endl;
+	cout << "BombBugs: " << numBombBugs;
+	xy.gotoXY(20, 6);
+	cout << "SuperAnts: " << numSuperAnts;
 }
 
 void World::displayGUI() const
@@ -198,24 +207,24 @@ void World::simulateOneStep()
 	// Reset all organisms to not moved
 	resetOrganisms();
 
-	char input;
+	int input;
 	if (_kbhit())
 	{
 		system("pause");
-		cout << "Press:\n1. b to add Bug\n2. a to add Ant\n3. s to add SuperAnt" << endl;
+		cout << "Press:\n1 to add Bug\n2 to add Bombug\n3 to add SuperAnt" << endl;
 		cin >> input;
 
 		switch (input)
 		{
-		case 'b':
+		case 1:
 		{
 			createOrganisms(OrganismType::BUG, 1);
 		}
-		case 'a':
+		case 2:
 		{
-			createOrganisms(OrganismType::ANT, 1);
+			createOrganisms(OrganismType::BombBug, 1);
 		}
-		case 's':
+		case 3:
 		{
 			createOrganisms(OrganismType::SuperAnt, 1);
 		}
@@ -228,6 +237,8 @@ void World::simulateOneStep()
 	moveOrganism(OrganismType::ANT);
 
 	moveOrganism(OrganismType::BombBug);
+
+	moveOrganism(OrganismType::SuperAnt);
 
 	// Make the bugs starve
 	cleanup();
@@ -277,6 +288,10 @@ void World::createOrganisms(OrganismType orgType, int count)
 			{
 				new BombBug(this, p.x, p.y);
 			}
+			else if (orgType == OrganismType::SuperAnt)
+			{
+				new SuperAnt(this, p.x, p.y);
+			}
 
 		}
 	}
@@ -322,14 +337,6 @@ void World::cleanup()
 	{
 		for (int j = 0; j < WORLDSIZE; j++)
 		{
-			/*
-			if (grid[i][j]->getType() == OrganismType::BombBug && grid[i][j]->isDead() && (grid[i][j] != NULL))
-			{
-				delete grid[i][j];
-				grid[i][j] = 0;
-
-			}*/
-
 			// Kill off any organisms that haven't eaten recently
 			if ((grid[i][j] != NULL) && grid[i][j]->isDead())
 			{

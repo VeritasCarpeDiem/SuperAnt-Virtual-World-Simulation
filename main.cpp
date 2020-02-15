@@ -26,13 +26,13 @@ int main()
 		Sleep(1000);
 
 #pragma region pause program
-		//if (_kbhit())//if key is pressed, pause program
-		//{
-		//	XY xy;
-		//	xy.gotoXY(6, 6);
-		//	system("pause");
-		//	
-		//}
+		if (_kbhit())//if key is pressed, pause program
+		{
+			XY xy;
+			xy.gotoXY(6, 6);
+			system("pause");
+			
+		}
 #pragma endregion
 
     }

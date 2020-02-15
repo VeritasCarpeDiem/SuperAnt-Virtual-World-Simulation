@@ -1,5 +1,4 @@
 #include <cstdlib>
-
 #include <iostream>
 #include "Ant.h"
 #include "Organism.h"

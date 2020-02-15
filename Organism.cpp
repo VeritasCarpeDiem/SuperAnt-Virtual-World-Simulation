@@ -13,7 +13,8 @@ Organism::Organism(World* aWorld, int xcoord, int ycoord) {
 }
 
 // flags the organism as moved or not
-void Organism::setMoved(bool hasMoved) {
+void Organism::setMoved(bool hasMoved) 
+{
     moved = hasMoved;
 }
 
@@ -28,7 +29,7 @@ void Organism::movesTo(int xNew, int yNew)
 {
        world->setAt(xNew, yNew, world->getAt(x, y));
     
-       world->setAt(x, y, NULL);
+       world->setAt(x, y, nullptr);
        
        x = xNew;
        y = yNew;

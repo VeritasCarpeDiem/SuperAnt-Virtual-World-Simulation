@@ -3,28 +3,32 @@
 #include "Organism.h"
 
 // The possible moves
-enum class Move {UP = 0, DOWN, LEFT, RIGHT};
+enum class Move 
+{
+	UP = 0, DOWN, LEFT, RIGHT
+};
 
 // The size of this world
 const int WORLDSIZE = 10;
 
 // Number of initial ants
-const int INITIAL_ANTS = 10;
+const int INITIAL_ANTS = 30;
 
 // Number of initial bugs
 const int INITIAL_BUGS = 12;
 
-const int INITIAL_BOMBBUGS = 25;
+const int INITIAL_BOMBBUGS = 5;
 
-const int initial_SuperAnts = 2;
+const int initial_SuperAnts = 3;
 
+//time steps untill superants die if they have not eaten
 const int starve_SuperAnts = 3;
 
 // Time steps between breeding of ants
 const int BREED_ANTS = 2;
 
 // Time steps between breeding of bugs
-const int BREED_BUGS = 12;
+const int BREED_BUGS = 3;
 
 // Time steps until bugs die if they have not eaten
 const int STARVE_BUGS = 5;

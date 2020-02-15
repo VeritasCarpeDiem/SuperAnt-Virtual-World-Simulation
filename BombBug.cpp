@@ -38,8 +38,7 @@ void BombBug::move()
 			delete world->getAt(x - 1, y);
 			world->setAt(x - 1, y, nullptr);
 		}
-		/*delete world->getAt(x, y);
-		world->setAt(x,y,nullptr);*/
+		
 	}
 }
 

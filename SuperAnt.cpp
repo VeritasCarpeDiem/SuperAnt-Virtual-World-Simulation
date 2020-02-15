@@ -2,83 +2,88 @@
 #include "Organism.h"
 #include "World.h"
 
-SuperAnt::SuperAnt(World* aWorld, int xcoord, int ycoord):Organism(aWorld,xcoord,ycoord)
+SuperAnt::SuperAnt(World* aWorld, int xcoord, int ycoord) :Organism(aWorld, xcoord, ycoord)
 {
-
+	deathTicks = 0;
+	eatBug = 0;
 }
 
 void SuperAnt::move()
 {
-	breedTicks++;
 	deathTicks++;
 
-	if (world->getAt(x, y + 1) != nullptr)
+	if (world->getAt(x, y + 2) != nullptr)
 	{
-		if (world->getAt(x, y + 1)->getType() == OrganismType::BUG)
+		if (world->getAt(x, y + 2)->getType() == OrganismType::BUG)
 		{
 			deathTicks = 0;
-			delete world->getAt(x, y + 1);
-			movesTo(x, y + 1);
+			delete world->getAt(x, y + 2);
+			movesTo(x, y + 2);
+			eatBug++;
 			return;
 		}
 	}
 
-	if (world->getAt(x, y - 1) != nullptr)
+	if (world->getAt(x, y - 2) != nullptr)
 	{
-		if (world->getAt(x, y - 1)->getType() == OrganismType::BUG)
+		if (world->getAt(x, y - 2)->getType() == OrganismType::BUG)
 		{
 			deathTicks = 0;
-			delete world->getAt(x, y - 1);
-			movesTo(x, y - 1);
+			delete world->getAt(x, y - 2);
+			movesTo(x, y - 2);
+			eatBug++;
 			return;
 		}
 	}
 
-	if (world->getAt(x - 1, y) != nullptr)
+	if (world->getAt(x - 2, y) != nullptr)
 	{
-		if (world->getAt(x - 1, y)->getType() == OrganismType::BUG)
+		if (world->getAt(x -2, y)->getType() == OrganismType::BUG)
 		{
 			deathTicks = 0;
-			delete world->getAt(x - 1, y);
-			movesTo(x - 1, y);
+			delete world->getAt(x - 2, y);
+			movesTo(x - 2, y);
+			eatBug++;
 			return;
 		}
 	}
-	if (world->getAt(x + 1, y) != nullptr)
+	if (world->getAt(x + 2, y) != nullptr)
 	{
-		if (world->getAt(x + 1, y)->getType() == OrganismType::BUG)
+		if (world->getAt(x + 2, y)->getType() == OrganismType::BUG)
 		{
 			deathTicks = 0;
-			delete world->getAt(x + 1, y);
-			movesTo(x + 1, y);
+			delete world->getAt(x + 2, y);
+			movesTo(x + 2, y);
+			eatBug++;
 			return;
 		}
 	}
 
 	Move mover = world->randomMove();
-	switch (mover) {
+	switch (mover)
+	{
 	case Move::UP:
-		if (world->getAt(x, y + 1) == nullptr && in_range(x, y + 1))
+		if (world->getAt(x, y + 2) == nullptr && in_range(x, y + 2))
 		{
-			movesTo(x, y + 1);
+			movesTo(x, y + 2);
 		}
 		break;
 	case Move::DOWN:
-		if (world->getAt(x, y - 1) == nullptr && in_range(x, y - 1))
+		if (world->getAt(x, y - 2) == nullptr && in_range(x, y - 2))
 		{
-			movesTo(x, y - 1);
+			movesTo(x, y - 2);
 		}
 		break;
 	case Move::LEFT:
-		if (world->getAt(x - 1, y) == nullptr && in_range(x - 1, y))
+		if (world->getAt(x - 2, y) == nullptr && in_range(x - 2, y))
 		{
-			movesTo(x - 1, y);
+			movesTo(x - 2, y);
 		}
 		break;
 	case Move::RIGHT:
-		if (world->getAt(x + 1, y) == nullptr && in_range(x + 1, y))
+		if (world->getAt(x + 2, y) == nullptr && in_range(x + 2, y))
 		{
-			movesTo(x + 1, y);
+			movesTo(x + 2, y);
 		}
 		break;
 	default:
@@ -88,7 +93,10 @@ void SuperAnt::move()
 
 void SuperAnt::breed()
 {
-	//blank b/c SuperAnt does not breed
+	if (eatBug >= 3 )//if SuperAnt ate 3 bugs, spawn new SuperAnt
+	{
+		breedAtAdjacentCell();
+	}
 }
 
 OrganismType SuperAnt::getType() const
@@ -103,7 +111,7 @@ char SuperAnt::representation() const
 
 int SuperAnt::size() const
 {
-	return 0;
+	return 15;
 }
 
 bool SuperAnt::in_range(int xx, int yy)
@@ -111,12 +119,23 @@ bool SuperAnt::in_range(int xx, int yy)
 	return (xx >= 0) && (xx < WORLDSIZE) && (yy >= 0) && (yy < WORLDSIZE);;
 }
 
+bool SuperAnt::isDead() const
+{
+	if (deathTicks >= starve_SuperAnts)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 void SuperAnt::generateOffspring(int whereX, int whereY)
 {
-	if (eatBug==3)//if SuperAnt ate 3 bugs, spawn new SuperAnt
-	{
-		new SuperAnt(this->world,whereX,whereY);
-		breedTicks = 0;
-		eatBug = 0;
-	}
+
+	new SuperAnt(this->world, whereX, whereY);
+	breedTicks = 0;
+	eatBug = 0;
+
 }

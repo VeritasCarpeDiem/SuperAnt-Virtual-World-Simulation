@@ -57,7 +57,8 @@ void Bug::move()
     }
     
     Move mover = world->randomMove();
-    switch (mover){
+    switch (mover)
+	{
 	case Move::UP:
             if(world->getAt(x, y + 1) == NULL && in_range(x, y + 1))
             {
