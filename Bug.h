@@ -7,7 +7,8 @@
 class Bug : public Organism
 {
 public:
-    
+    Bug(){}
+
     Bug(World* aWorld, int xcoord, int ycoord);
     // In the given world moves this organism.
     void move();
@@ -31,7 +32,7 @@ public:
 private:
     
     void generateOffspring(int whereX, int whereY);
-    int death_tik;
+    int death_tik{};
 };
 
 #endif /* defined(__INHERITANCE_AND_POLYMORPHISM__Bug__) */

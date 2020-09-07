@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Organism.h"
+#include "Bug.h"
 
 #pragma region instructions
 //Super Ant behaviour.
@@ -18,7 +19,7 @@
 //B : Add Bug
 #pragma endregion
 
-class SuperAnt :public Organism
+class SuperAnt :public Bug
 {
 public:
 

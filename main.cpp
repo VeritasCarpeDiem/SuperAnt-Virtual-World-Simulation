@@ -14,29 +14,40 @@ int main()
 
     myWorld.display();
 	
-	//PlaySound("love.wav", NULL, SND_ASYNC | SND_LOOP);
+	PlaySound("Music.wav", NULL, SND_ASYNC| SND_LOOP);
 
-    while (true)
+    while (true) 
 	{  
-		
 		system("cls");
 		myWorld.simulateOneStep();
         myWorld.display();
 
 		Sleep(1000);
 
-#pragma region pause program
-		if (_kbhit())//if key is pressed, pause program
+		//allows User to add ants,bugs,superants,bombBugs
+		if (_kbhit())
 		{
-			XY xy;
-			xy.gotoXY(6, 6);
-			system("pause");
-			
+			//system("pause");
+			char input = _getch();
+			if (input == 'a')
+			{
+				myWorld.createOrganisms(OrganismType::ANT, 1);
+			}
+			else if (input == 's')
+			{
+				myWorld.createOrganisms(OrganismType::SuperAnt, 1);
+			}
+			else if (input == 'b')
+			{
+				myWorld.createOrganisms(OrganismType::BUG, 1);
+			}
+			else if (input == 'B')
+			{
+				myWorld.createOrganisms(OrganismType::BombBug, 1);
+			}
 		}
-#pragma endregion
 
     }
-
 	return 0;
     
 }

@@ -6,8 +6,10 @@ enum class OrganismType {ANT, BUG, BombBug,SuperAnt};
 // forward declaration
 class World;
 
-class Organism {
+class Organism 
+{
     public:
+        Organism(){}
         // Create an organism at the given coordinates.
         Organism(World* aWorld, int xcoord, int ycoord);
         virtual ~Organism() { }
@@ -51,16 +53,16 @@ class Organism {
         void breedAtAdjacentCell();
 
         // This organism's x position in the world.
-        int x;
+        int x{};
 
         // This organism's y position in the world.
-        int y;
+        int y{};
 
         // Has moved this turn?
-        bool moved;
+        bool moved{};
 
         // Number of ticks since breeding.
-        int breedTicks;
+        int breedTicks{};
 
         // A pointer to the world in which this organism lives.
         World* world;

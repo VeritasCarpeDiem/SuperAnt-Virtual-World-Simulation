@@ -2,7 +2,7 @@
 #include "Organism.h"
 #include "World.h"
 
-SuperAnt::SuperAnt(World* aWorld, int xcoord, int ycoord) :Organism(aWorld, xcoord, ycoord)
+SuperAnt::SuperAnt(World* aWorld, int xcoord, int ycoord) :Bug(aWorld, xcoord, ycoord)
 {
 	deathTicks = 0;
 	eatBug = 0;
@@ -111,7 +111,7 @@ char SuperAnt::representation() const
 
 int SuperAnt::size() const
 {
-	return 15;
+	return 0;
 }
 
 bool SuperAnt::in_range(int xx, int yy)
@@ -133,9 +133,7 @@ bool SuperAnt::isDead() const
 
 void SuperAnt::generateOffspring(int whereX, int whereY)
 {
-
 	new SuperAnt(this->world, whereX, whereY);
 	breedTicks = 0;
 	eatBug = 0;
-
 }

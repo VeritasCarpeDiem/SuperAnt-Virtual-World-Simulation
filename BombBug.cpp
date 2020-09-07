@@ -28,7 +28,7 @@ void BombBug::move()
 			delete world->getAt(x, y - 1);
 			world->setAt(x, y - 1, nullptr);
 		}
-		if (world->getAt(x + 1, y) != NULL)
+		if (world->getAt(x + 1, y) != nullptr)
 		{
 			delete world->getAt(x + 1, y);
 			world->setAt(x + 1, y, nullptr);
@@ -67,7 +67,7 @@ bool BombBug::isDead() const
 {
 	if (death_tik == 0)
 	{
-		PlaySound("Bomb+1.wav", NULL, SND_ASYNC);
+		PlaySound("Bomb+2.wav", NULL, SND_ASYNC);
 		return true;
 	}
 	else

@@ -57,7 +57,7 @@ World::~World()
 // If the coordinates are not valid, returns NULL
 Organism* World::getAt(int x, int y) const
 {
-	if ((x >= 0) && (x < WORLDSIZE) && (y >= 0) && (y < WORLDSIZE))
+	if ((x >= 0) && (x < WORLDSIZE) && (y >= 0) && (y < WORLDSIZE)) //if position is within array gride, return array
 	{
 		return grid[x][y];
 	}
@@ -122,20 +122,40 @@ void World::display() const
 					numSuperAnts++;
 				}
 				cout << " " << grid[i][j]->representation() << " ";
+			
 				c.changeTextColor(Colors::WHITE);
 			}
 		}
+		
 		y++;
 		x = 10;
 	}
+	xy.gotoXY(20, 2);
+	cout << "Jin Kim" << endl;
 	xy.gotoXY(20, 3);
+	c.changeTextColor(Colors::RED);
 	cout << "Ants: " << numAnts;
 	xy.gotoXY(20, 4);
+	c.changeTextColor(Colors::BLUE);
 	cout << "Bugs: " << numBugs;
 	xy.gotoXY(20, 5);
+	c.changeTextColor(Colors::GREEN);
 	cout << "BombBugs: " << numBombBugs;
 	xy.gotoXY(20, 6);
+	c.changeTextColor(Colors::YELLOW);
 	cout << "SuperAnts: " << numSuperAnts;
+	c.changeTextColor(Colors::WHITE);
+	xy.gotoXY(20, 20);
+	cout << "Press: " << endl;
+	xy.gotoXY(20, 21);
+	cout << "a: add Ant";
+	xy.gotoXY(20, 22);
+	cout << "b: add Bug";
+	xy.gotoXY(20, 23);
+	cout << "B: add BombBug";
+	xy.gotoXY(20, 24);
+	cout<<"s: add SuperAnt";
+	xy.gotoXY(20, 25);
 }
 
 void World::displayGUI() const
@@ -207,29 +227,7 @@ void World::simulateOneStep()
 	// Reset all organisms to not moved
 	resetOrganisms();
 
-	int input;
-	if (_kbhit())
-	{
-		system("pause");
-		cout << "Press:\n1 to add Bug\n2 to add Bombug\n3 to add SuperAnt" << endl;
-		cin >> input;
-
-		switch (input)
-		{
-		case 1:
-		{
-			createOrganisms(OrganismType::BUG, 1);
-		}
-		case 2:
-		{
-			createOrganisms(OrganismType::BombBug, 1);
-		}
-		case 3:
-		{
-			createOrganisms(OrganismType::SuperAnt, 1);
-		}
-		}
-	}
+	
 	// Move the bugs
 	moveOrganism(OrganismType::BUG);
 
